@@ -84,13 +84,16 @@
         <main class="py-4">
             <div class="container-fluid">
                 <div class="row">
-                    <!-- Sidebar -->
-                    <div class="col-md-3 col-lg-2 bg-light">
-                        @include('layouts.sidebar')
-                    </div>
+
+                    @if(!empty(Auth::user()))
+                        <!-- Sidebar -->
+                        <div class="col-md-3 col-lg-2 bg-light">
+                            @include('layouts.sidebar')
+                        </div>
+                    @endif
         
                     <!-- Main Content -->
-                    <div class="col-md-9 col-lg-10">
+                    <div class="{{ empty(Auth::user()) ? 'col-md-12' : 'col-md-9 col-lg-10' }}">
                         @yield('content')
                     </div>
                 </div>
