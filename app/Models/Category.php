@@ -13,4 +13,9 @@ class Category extends Model
         'category_thumbnail',
         'publication_status',
     ];
+
+    public function items(){
+        return $this->hasMany(Item::class);
+    }
+
 }

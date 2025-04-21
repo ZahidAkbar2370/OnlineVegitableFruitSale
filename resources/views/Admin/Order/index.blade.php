@@ -33,7 +33,7 @@
 
                                 <td>
                                     <strong>{{ $order->itemDetail->item_name ?? 'Item Deleted' }}</strong><br>
-                                    <small>{{ Str::limit($order->itemDetail->description, 50) ?? '' }}</small>
+                                    <small>{{ Str::limit($order->itemDetail->description ?? '', 50) }}</small>
                                 </td>
                                 <td>{{ env('currencySymbol') }} - {{ $order->sale_price }}</td>
                                 <td>{{ $order->unit }}</td>
