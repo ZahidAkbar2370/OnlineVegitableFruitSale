@@ -14,5 +14,10 @@ class Item extends Model
         'slug',
         'sale_price',
         'unit',
+        'description',
     ];
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
 }

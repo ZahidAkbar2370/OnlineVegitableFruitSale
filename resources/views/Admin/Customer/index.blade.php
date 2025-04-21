@@ -11,7 +11,7 @@
         <div class="card-body">
             
             @if(Session::has('message'))
-                <div class="alert alert-info">
+                <div class="alert alert-info" id="flash-message">
                     {{ Session::get('message') }}
                 </div>
             @endif

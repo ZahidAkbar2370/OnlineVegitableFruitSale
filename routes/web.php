@@ -1,10 +1,12 @@
 <?php
-
+use App\Models\Item;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function(){
-    return view('Frontend.Pages.home');
+Route::get('/', function () {
+    $items = Item::with('category')->orderBy('created_at', 'DESC')->get();
+    
+    return view('Frontend.Pages.home', compact('items'));
 });
 
 Route::get('shop', function(){
@@ -38,6 +40,15 @@ Route::middleware('auth')->group(function(){
     Route::post('update-customer', [App\Http\Controllers\Admin\CustomerController::class, 'update']);
     Route::get('delete-customer/{id}', [App\Http\Controllers\Admin\CustomerController::class, 'destory']);
 
+    
+    Route::get('items', [App\Http\Controllers\Admin\ItemController::class, 'index']);
+    Route::get('create-item', [App\Http\Controllers\Admin\ItemController::class, 'create']);
+    Route::post('store-item', [App\Http\Controllers\Admin\ItemController::class, 'store']);
+    Route::get('edit-item/{id}', [App\Http\Controllers\Admin\ItemController::class, 'edit']);
+    Route::post('update-item', [App\Http\Controllers\Admin\ItemController::class, 'update']);
+    Route::get('delete-item/{id}', [App\Http\Controllers\Admin\ItemController::class, 'destory']);
+
+
 
     Route::get('categories', [App\Http\Controllers\Admin\CategoryController::class, 'index']);
     Route::get('create-category', [App\Http\Controllers\Admin\CategoryController::class, 'create']);
@@ -59,13 +70,13 @@ Route::middleware('auth')->group(function(){
     // });
 
 
-    Route::get('create-item', function(){
-        return view('Admin.Item.create');
-    });
+    // Route::get('create-item', function(){
+    //     return view('Admin.Item.create');
+    // });
 
-    Route::get('items', function(){
-        return view('Admin.Item.index');
-    });
+    // Route::get('items', function(){
+    //     return view('Admin.Item.index');
+    // });
 
 
     // Route::get('orders', function(){
@@ -74,6 +85,16 @@ Route::middleware('auth')->group(function(){
 });
 
 
+
 Auth::routes();
 
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('add-to-cart/{itemID}', [App\Http\Controllers\CartController::class, 'addToCart']);
+Route::get('cart', [App\Http\Controllers\CartController::class, 'viewCart']);
+Route::post('cart-remove/{id}', [App\Http\Controllers\CartController::class, 'removeFromCart']);
+Route::post('checkout', [App\Http\Controllers\CartController::class, 'checkout']);
+

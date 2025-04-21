@@ -9,6 +9,14 @@
         </div>
 
         <div class="card-body">
+
+            @if(Session::has('message'))
+                <div class="alert alert-info" id="flash-message">
+                    {{ Session::get('message') }}
+                </div>
+            @endif
+
+
             <table class="table table-bordered mb-0">
                 <thead class="table-light">
                     <tr>
@@ -24,7 +32,7 @@
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $category->category_name }}</td>
-                                <td><img src="{{ asset($category->category_thumbnail) }}" style="width: 60px; height: 60;" alt=""></td>
+                               <td><img src="{{ asset($category->category_thumbnail ?? 'uploads/category/default.png') }}" style="width: 50px; height: 50px; object-fit: cover;" alt=""></td>
                                 <td>
                                     <a href="{{ url('edit-category', $category->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                     <a href="{{ url('delete-category', $category->id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this Category?')">Delete</a>

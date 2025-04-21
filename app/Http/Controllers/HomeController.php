@@ -30,4 +30,11 @@ class HomeController extends Controller
 
         return view('Admin.Dashboard.dashboard');
     }
+
+    public function showItemOnHomePage()
+    {
+        $items = Item::with('category')->orderBy('created_at', 'DESC')->get();
+        
+        return view('Frontend.Pages.home', compact('items'));
+    }
 }
