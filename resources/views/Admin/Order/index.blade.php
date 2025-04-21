@@ -5,7 +5,7 @@
     <div class="card shadow-sm">
         <div class="card-header card-header-bg d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Orders</h5>
-            <span class="btn btn-primary btn-sm">Total: 20</span>
+            <span class="btn btn-primary btn-sm">Total: {{ !empty($orders) ? count($orders) : 0 }}</span>
         </div>
 
         <div class="card-body">
@@ -18,28 +18,34 @@
                         <th>Sale Price</th>
                         <th>Unit</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        {{-- <th>Actions</th> --}}
                     </tr>
                 </thead>
                 <tbody>
-                    @if(isset($posts) && !empty($posts))
-                        @forelse ($posts as $post)
+                    @if(isset($orders) && !empty($orders))
+                        @foreach ($orders as $key => $order)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $post->title }}</td>
-                                <td>{{ Str::limit($post->content, 50) }}</td>
+                                <td>{{ $key+1 }}</td>
                                 <td>
-                                    <a href="{{ url('posts.edit', $post->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                    <form action="{{ url('posts.destroy', $post->id) }}" method="POST" style="display:inline;">
-                                        @csrf 
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this post?')">Delete</button>
-                                    </form>
+                                    <strong>{{ $order->customerDetail->name ?? 'Customer Deleted' }}</strong><br>
+                                    <small>{{ $order->customerDetail->email ?? '' }}</small>
                                 </td>
+
+                                <td>
+                                    <strong>{{ $order->itemDetail->item_name ?? 'Item Deleted' }}</strong><br>
+                                    <small>{{ Str::limit($order->itemDetail->description, 50) ?? '' }}</small>
+                                </td>
+                                <td>{{ env('currencySymbol') }} - {{ $order->sale_price }}</td>
+                                <td>{{ $order->unit }}</td>
+                                <td>{{ $order->status }}</td>
+                                {{-- <td> --}}
+                                    {{-- <a href="{{ url('edit-order', $order->id) }}" class="btn btn-sm btn-warning">Edit</a> --}}
+                                    {{-- <a href="{{ url('delete-order', $order->id) }}" class="btn btn-sm btn-danger">Delete</a> --}}
+                                {{-- </td> --}}
                             </tr>
-                        @empty
-                            <tr><td colspan="4" class="text-center">No posts found.</td></tr>
-                        @endforelse
+                        @endforeach
+                        @else
+                            <tr><td colspan="7" class="text-center">No Order Found.</td></tr>
                     @endif
                 </tbody>
             </table>

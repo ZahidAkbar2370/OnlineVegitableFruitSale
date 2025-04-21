@@ -19,32 +19,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(isset($posts) && !empty($posts))
-                        @forelse ($posts as $post)
+                    @if(isset($categories) && !empty($categories))
+                        @foreach ($categories as $key => $category)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $post->title }}</td>
-                                <td>{{ Str::limit($post->content, 50) }}</td>
+                                <td>{{ $key+1 }}</td>
+                                <td>{{ $category->category_name }}</td>
+                                <td><img src="{{ asset($category->category_thumbnail) }}" style="width: 60px; height: 60;" alt=""></td>
                                 <td>
-                                    <a href="{{ url('posts.edit', $post->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                    <form action="{{ url('posts.destroy', $post->id) }}" method="POST" style="display:inline;">
-                                        @csrf 
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this post?')">Delete</button>
-                                    </form>
+                                    <a href="{{ url('edit-category', $category->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="{{ url('delete-category', $category->id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this Category?')">Delete</a>
                                 </td>
                             </tr>
-                        @empty
-                            <tr><td colspan="4" class="text-center">No posts found.</td></tr>
-                        @endforelse
+                        @endforeach
+                        @else
+                            <tr><td colspan="4" class="text-center">No Category Found.</td></tr>
                     @endif
                 </tbody>
             </table>
         </div>
 
-        {{-- <div class="card-footer text-end">
-            {{ $posts->links() }}
-        </div> --}}
+        <div class="card-footer text-end">
+            {{ $categories->links() }}
+        </div>
     </div>
 </div>
 @endsection

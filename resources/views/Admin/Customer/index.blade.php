@@ -5,10 +5,17 @@
     <div class="card shadow-sm">
         <div class="card-header card-header-bg d-flex justify-content-between align-items-center">
             <h5 class="mb-0">All Customers</h5>
-            <a href="{{ url('create-customer') }}" class="btn btn-primary btn-sm">Customer</a>
+            <a href="{{ url('create-customer') }}" class="btn btn-primary btn-sm">Add Customer</a>
         </div>
 
         <div class="card-body">
+            
+            @if(Session::has('message'))
+                <div class="alert alert-info">
+                    {{ Session::get('message') }}
+                </div>
+            @endif
+
             <table class="table table-bordered mb-0">
                 <thead class="table-light">
                     <tr>
@@ -16,37 +23,41 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Mobile #</th>
-                        <th>Publication Status</th>
+                        <th>Created at</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if(isset($posts) && !empty($posts))
-                        @forelse ($posts as $post)
+                    @if(isset($customers) && !empty($customers))
+                        @foreach ($customers as $key => $customer)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $post->title }}</td>
-                                <td>{{ Str::limit($post->content, 50) }}</td>
+                                <td>{{ $key+1 }}</td>
+                                <td>{{ $customer->name }}</td>
+                                <td>{{ $customer->email }}</td>
+                                <td>{{ $customer->mobile_no ?? '--' }}</td>
+                                <td><span class="text-uppercase">{{ $customer->created_at->format('Y-m-d h:i:s') }}</span></td>
+                                {{-- <td>{{ Str::limit($post->content, 50) }}</td> --}}
                                 <td>
-                                    <a href="{{ url('posts.edit', $post->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                    <form action="{{ url('posts.destroy', $post->id) }}" method="POST" style="display:inline;">
+                                    <a href="{{ url('edit-customer', $customer->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="{{ url('delete-customer', $customer->id) }}" onclick="return confirm('Delete this Customer?')" class="btn btn-sm btn-danger">Delete</a>
+                                    {{-- <form action="{{ url('delete-customer', $customer->id) }}" method="POST" style="display:inline;">
                                         @csrf 
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this post?')">Delete</button>
-                                    </form>
+                                    </form> --}}
                                 </td>
                             </tr>
-                        @empty
-                            <tr><td colspan="4" class="text-center">No posts found.</td></tr>
-                        @endforelse
+                        @endforeach
+                        @else
+                        <tr><td colspan="6" class="text-center">No Customer Found.</td></tr>
                     @endif
                 </tbody>
             </table>
         </div>
 
-        {{-- <div class="card-footer text-end">
-            {{ $posts->links() }}
-        </div> --}}
+        <div class="card-footer text-end">
+            {{ $customers->links() }}
+        </div>
     </div>
 </div>
 @endsection

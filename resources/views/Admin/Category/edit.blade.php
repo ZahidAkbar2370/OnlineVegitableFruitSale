@@ -4,17 +4,19 @@
 <div class="container">
     <div class="card shadow-sm">
         <div class="card-header card-header-bg">
-            <h5 class="mb-0">Create New Category</h5>
+            <h5 class="mb-0">Edit Category</h5>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ URL::to('store-category') }}">
+            <form method="POST" action="{{ URL::to('update-category') }}">
                 @csrf
+
+                <input type="hidden" name="id" value="{{ $category->id }}">
 
                 <div class="row">
                     <!-- Category Name -->
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Category Name</label>
-                        <input type="text" name="category_name" class="form-control" required>
+                        <input type="text" name="category_name" class="form-control"  value="{{ $category->category_name }}" required>
                     </div>
 
                     {{-- <!-- Thumbnail -->

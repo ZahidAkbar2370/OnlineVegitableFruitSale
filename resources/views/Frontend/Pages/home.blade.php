@@ -904,7 +904,7 @@
 
 
 <!-- Tastimonial Start -->
-{{-- <div class="container-fluid testimonial py-5">
+<div class="container-fluid testimonial py-5">
     <div class="container py-5">
         <div class="testimonial-header text-center">
             <h4 class="text-primary">Our Testimonial</h4>
@@ -988,7 +988,7 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 <!-- Tastimonial End -->
 
 @endsection

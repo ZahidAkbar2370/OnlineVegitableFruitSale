@@ -15,4 +15,12 @@ class Order extends Model
         'unit',
         'status',
     ];
+
+    function customerDetail(){
+        return $this->belongsTo(User::class, 'customer_id', 'id');
+    }
+
+    function itemDetail(){
+        return $this->belongsTo(Item::class, 'item_id', 'id');
+    }
 }
