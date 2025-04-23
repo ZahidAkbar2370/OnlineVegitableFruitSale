@@ -10,7 +10,7 @@
             <div class="card shadow-sm border-start border-primary border-4">
                 <div class="card-body">
                     <h6>Total Customers</h6>
-                    <h3>{{ $totalCustomers ?? 0 }}</h3>
+                    <h3>{{ $customerCount ?? 0 }}</h3>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
             <div class="card shadow-sm border-start border-success border-4">
                 <div class="card-body">
                     <h6>Total Orders</h6>
-                    <h3>{{ $totalOrders ?? 0 }}</h3>
+                    <h3>{{ $orderCount ?? 0 }}</h3>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
             <div class="card shadow-sm border-start border-warning border-4">
                 <div class="card-body">
                     <h6>Total Items</h6>
-                    <h3>{{ $totalItems ?? 0 }}</h3>
+                    <h3>{{ $itemCount ?? 0 }}</h3>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
             <div class="card shadow-sm border-start border-danger border-4">
                 <div class="card-body">
                     <h6>Total Categories</h6>
-                    <h3>{{ $totalCategories ?? 0 }}</h3>
+                    <h3>{{ $categoryCount ?? 0 }}</h3>
                 </div>
             </div>
         </div>

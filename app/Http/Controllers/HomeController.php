@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Item;
+use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +32,12 @@ class HomeController extends Controller
             return redirect('profile');
         }
 
-        return view('Admin.Dashboard.dashboard');
+        $customerCount = User::where('role', 'customer')->count();
+        $orderCount = Order::count();
+        $itemCount = Item::count();
+        $categoryCount = Category::count();
+
+        return view('Admin.Dashboard.dashboard', compact('customerCount', 'orderCount', 'itemCount', 'categoryCount'));
     }
 
     public function showItemOnHomePage()

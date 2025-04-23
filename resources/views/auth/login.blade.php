@@ -1,7 +1,14 @@
-@extends('layouts.app')
+@extends('Frontend.layout')
 
-@section('content')
-<div class="container">
+@section('frontend_content')
+
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Create your Account</h1>
+</div>
+<!-- Single Page Header End -->
+
+<div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -56,6 +63,8 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
+
+                                <a href="{{ url('register') }}" class="btn btn-danger btn-sm">Register here</a>
 
                                 {{-- @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">

@@ -15,6 +15,7 @@ class Item extends Model
         'sale_price',
         'unit',
         'description',
+        'item_thumbnail'
     ];
     public function category(){
         return $this->belongsTo(Category::class);

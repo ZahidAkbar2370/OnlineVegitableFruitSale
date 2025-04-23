@@ -15,7 +15,7 @@ class CartController extends Controller
         $productId = $item->id;
         $productName = $item->item_name;
         $productPrice = $item->sale_price;
-        // $productImage = $item->thumbnail;
+        $productImage = $item->item_thumbnail;
 
         $cart = session()->get('cart', []);
 
@@ -26,14 +26,15 @@ class CartController extends Controller
                 "item_id" => $productId,
                 "name" => $productName,
                 "price" => $productPrice,
-                // "image" => $productImage,
+                "image" => $productImage,
                 "quantity" => 1
             ];
         }
+        
 
         session()->put('cart', $cart);
         // return response()->json(['status' => 'success', 'message' => 'Product added to cart']);
-        return redirect('cart');
+        return redirect('cart')->with('success', 'Shopping Cart Updated successfully!');
     }
 
     public function removeFromCart(Request $request)
@@ -46,7 +47,7 @@ class CartController extends Controller
             session()->put('cart', $cart);
         }
 
-        return redirect()->route('cart')->with('success', 'Product removed from cart');
+        return redirect('cart')->with('success', 'Product removed from cart');
     }
 
     public function viewCart()
@@ -77,6 +78,6 @@ class CartController extends Controller
 
         session()->forget('cart');
 
-        return redirect('/')->with('success', 'Order placed successfully!');
+        return redirect('cart')->with('success', 'Order placed successfully!');
     }
 }

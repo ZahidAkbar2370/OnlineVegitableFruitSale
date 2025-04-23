@@ -37,6 +37,15 @@ class ItemController extends Controller
 
         $slug = Str::slug($request->title);
 
+        $path = 'uploads/item/default.png';
+
+        if ($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/item'), $filename);
+            $path = 'uploads/item/' . $filename;
+        }
+
         Item::create([
             'category_id' => $request->category,
             'item_name' => $request->title,
@@ -44,6 +53,7 @@ class ItemController extends Controller
             'unit' => $request->uni,
             'description' => $request->description,
             'slug' => $slug,
+            'item_thumbnail' => $path
         ]);
 
         Session::flash('message', 'Item created successfully.');
@@ -78,6 +88,15 @@ class ItemController extends Controller
     // Update the item with the new data
     $slug = Str::slug($request->title);
 
+    $path = $item->item_thumbnail;
+
+        if ($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/item'), $filename); // Save in public/uploads/category
+            $path = 'uploads/item/' . $filename;
+        }
+
     $item->update([
         'category_id' => $request->category,
         'item_name' => $request->title,
@@ -85,6 +104,7 @@ class ItemController extends Controller
         'unit' => $request->uni,
         'description' => $request->description,
         'slug' => $slug,
+        'item_thumbnail' => $path
     ]);
 
     Session::flash('message', 'Item updated successfully.');

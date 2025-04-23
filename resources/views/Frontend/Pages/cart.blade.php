@@ -14,6 +14,13 @@
 <!-- Cart Page Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
+        
+        @if(Session::has('success'))
+                <div class="alert alert-info" id="flash-message">
+                    {{ Session::get('success') }}
+                </div>
+            @endif
+
         @if(session('cart') && count(session('cart')) > 0)
         <div class="table-responsive">
             <table class="table">
@@ -32,12 +39,12 @@
                     @foreach(session('cart') as $id => $item)
                     @php $total += $item['price'] * $item['quantity']; @endphp
                     <tr>
-                        {{-- <td><img src="{{ asset($item['image']) }}" class="rounded-circle" style="width: 80px; height: 80px;"></td> --}}
-                        <td></td>
+                        <td><img src="{{ asset($item['image']) }}" class="rounded-circle" style="width: 80px; height: 80px;"></td>
+                        {{-- <td></td> --}}
                         <td><p class="mt-4">{{ $item['name'] }}</p></td>
-                        <td><p class="mt-4">${{ number_format($item['price'], 2) }}</p></td>
+                        <td><p class="mt-4"><small>{{ env('currencySymbol') }}</small>{{ number_format($item['price'], 2) }}</p></td>
                         <td><p class="mt-4">{{ $item['quantity'] }}</p></td>
-                        <td><p class="mt-4">${{ number_format($item['price'] * $item['quantity'], 2) }}</p></td>
+                        <td><p class="mt-4"><small>{{ env('currencySymbol') }}</small>{{ number_format($item['price'] * $item['quantity'], 2) }}</p></td>
                         <td>
                             <form action="{{ url('cart-remove/'.$id) }}" method="POST">
                                 @csrf
@@ -59,19 +66,19 @@
                     <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
                     <div class="d-flex justify-content-between mb-4">
                         <h5>Subtotal:</h5>
-                        <p>${{ number_format($total, 2) }}</p>
+                        <p><small>{{ env('currencySymbol') }}</small>{{ number_format($total, 2) }}</p>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h5>Shipping</h5>
-                        <p>Flat rate: $3.00</p>
+                        <p>Flat rate: <small>{{ env('currencySymbol') }}</small>3.00</p>
                     </div>
                     <div class="py-4 border-top border-bottom d-flex justify-content-between">
                         <h5>Total</h5>
-                        <p>${{ number_format($total + 3, 2) }}</p>
+                        <p><small>{{ env('currencySymbol') }}</small>{{ number_format($total + 3, 2) }}</p>
                     </div>
 <form action="{{ url('checkout') }}" method="POST">
     @csrf
-    <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+    <button type="submit" class="btn btn-primary mt-3">Submit Order</button>
 </form>
 
                 </div>

@@ -1,5 +1,7 @@
 <?php
 use App\Models\Item;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -10,7 +12,9 @@ Route::get('/', function () {
 });
 
 Route::get('shop', function(){
-    return view('Frontend.Pages.shop');
+    $items = Item::with('category')->orderBy('created_at', 'DESC')->get();
+
+    return view('Frontend.Pages.shop', compact('items'));
 });
 
 Route::get('about-us', function(){
@@ -25,6 +29,28 @@ Route::middleware('auth')->group(function(){
     Route::get('profile', function(){
         return view('Frontend.Pages.profile');
     });
+
+    Route::post('update-profile', function(Request $request){
+        $user = User::find(Auth::user()->id);
+
+        $user->name = $request->name;
+        $user->mobile_no = $request->mobile_no;
+        $user->update();
+        
+        return redirect('profile');
+    });
+
+    Route::get('logout', function(){
+        Auth::logout();
+
+        return redirect('login');
+    });
+
+
+    Route::get('add-to-cart/{itemID}', [App\Http\Controllers\CartController::class, 'addToCart']);
+    Route::get('cart', [App\Http\Controllers\CartController::class, 'viewCart']);
+    Route::post('cart-remove/{id}', [App\Http\Controllers\CartController::class, 'removeFromCart']);
+    Route::post('checkout', [App\Http\Controllers\CartController::class, 'checkout']);
         
     // Route::get('create-customer', function(){
     //     return view('Admin.Customer.create');
@@ -93,8 +119,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::get('add-to-cart/{itemID}', [App\Http\Controllers\CartController::class, 'addToCart']);
-Route::get('cart', [App\Http\Controllers\CartController::class, 'viewCart']);
-Route::post('cart-remove/{id}', [App\Http\Controllers\CartController::class, 'removeFromCart']);
-Route::post('checkout', [App\Http\Controllers\CartController::class, 'checkout']);
+
 

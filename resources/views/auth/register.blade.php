@@ -1,7 +1,14 @@
-@extends('layouts.app')
+@extends('Frontend.layout')
 
-@section('content')
-<div class="container">
+@section('frontend_content')
+
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Login your Account</h1>
+</div>
+<!-- Single Page Header End -->
+
+<div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

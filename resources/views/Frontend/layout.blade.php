@@ -43,9 +43,9 @@
             <div class="container topbar bg-primary d-none d-lg-block">
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
-                        <small class="me-3"><i class="fas fa-phone me-2 text-secondary"></i><a href="#" class="text-white">+9230123232323</a></small>
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Ward no 3, Fateh pur Layyah</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">irshadcamboh245@gmail.come</a></small>
+                        <small class="me-3"><i class="fas fa-phone me-2 text-secondary"></i><a href="#" class="text-white">03047930535</a></small>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                         <div class="navbar-nav mx-auto">
                             <a href="{{ url('/') }}" class="nav-item nav-link active">Home</a>
                             <a href="{{ url('shop') }}" class="nav-item nav-link">Shop</a>
-                            <a href="{{ url('about-us') }}" class="nav-item nav-link">About</a>
+                            {{-- <a href="{{ url('about-us') }}" class="nav-item nav-link">About</a> --}}
                             {{-- <a href="{{ url('team') }}" class="nav-item nav-link">Team</a> --}}
                             {{-- <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -71,16 +71,23 @@
                                 </div>
                             </div> --}}
                             <a href="{{ url('contact-us') }}" class="nav-item nav-link">Contact</a>
+                            <a href="{{ url('https://api.whatsapp.com/send?phone=923047930535&text=Welcome%20to%20Online%20Fruid%20%26%20Vegitable%20Shop') }}" class="nav-item nav-link" target="_blank">Whatsapp Now</a>
                         </div>
                         <div class="d-flex m-3 me-0">
                             {{-- <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button> --}}
                             <a href="{{ url('cart') }}" class="position-relative me-4 my-auto">
-                                <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                <i class="fa fa-shopping-cart fa-2x"></i>
+                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">{{ session('cart') ? count(session('cart')) : 0 }}</span>
                             </a>
-                            <a href="{{ url(empty(Auth::user()) ? 'login' : 'profile') }}" class="my-auto">
-                                <i class="fas fa-user fa-2x"></i>
-                            </a>
+                            @if(!empty(Auth::user()) && Auth::user()->role == "customer")
+                                <a href="{{ url('profile') }}" class="my-auto">
+                                    <i class="fas fa-user fa-2x"></i>
+                                </a>
+                            @else
+                                <a href="{{ url('home') }}" class="my-auto">
+                                    <i class="fas fa-user fa-2x"></i>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </nav>

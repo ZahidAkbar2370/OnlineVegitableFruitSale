@@ -49,7 +49,7 @@
                     <!-- Thumbnail -->
                     <div class="col-md-12 mb-3">
                         <label class="form-label">Thumbnail</label>
-                        <input type="file" name="thumbnail" class="form-control">
+                        <input type="file" name="thumbnail" class="form-control" required>
                     </div>
                 </div>
 
